@@ -1,2 +1,2 @@
 # geoverview
-Visualisez simplement vos données géographique
+Visualisez simplement vos données géographiques
