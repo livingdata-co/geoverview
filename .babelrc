@@ -3,7 +3,9 @@
     [
       "inline-import", {
         "extensions": [".css"]
-      }
+      },
+      "transform-define",
+      "./env-config.js"
     ]
   ],
   "presets": [
