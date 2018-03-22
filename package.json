@@ -1,0 +1,78 @@
+{
+  "name": "geoverview",
+  "version": "1.0.0",
+  "description": "Visualisez simplement vos données géographique",
+  "main": "index.js",
+  "author": "tmerlier",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node server",
+    "build": "next build",
+    "start": "cross-env NODE_ENV=production node server",
+    "export": "next export",
+    "lint": "xo"
+  },
+  "dependencies": {
+    "@turf/turf": "^5.1.6",
+    "compression": "^1.7.2",
+    "express": "^4.16.3",
+    "mapbox-gl": "^0.44.1",
+    "next": "^5.0.1-canary.16",
+    "prop-types": "^15.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-dropzone": "^4.2.9",
+    "react-icons": "^2.2.7",
+    "react-mapbox-gl": "^3.8.0",
+    "remove": "^0.1.5"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.2",
+    "babel-plugin-inline-import": "^2.0.6",
+    "eslint-config-xo-react": "^0.14.0",
+    "eslint-plugin-react": "^7.4.0",
+    "webpack-bundle-analyzer": "^2.9.1",
+    "xo": "^0.18.2"
+  },
+  "xo": {
+    "extends": "xo-react",
+    "semicolon": false,
+    "space": 2,
+    "envs": [
+      "browser"
+    ],
+    "parser": "babel-eslint",
+    "rules": {
+      "jsx-quotes": [
+        "error",
+        "prefer-single"
+      ],
+      "react/jsx-closing-bracket-location": [
+        "error",
+        "after-props"
+      ],
+      "react/jsx-closing-tag-location": "off",
+      "react/jsx-first-prop-new-line": "off",
+      "react/jsx-max-props-per-line": [
+        "warn",
+        {
+          "maximum": 4,
+          "when": "multiline"
+        }
+      ],
+      "react/jsx-tag-spacing": [
+        "error",
+        {
+          "closingSlash": "never",
+          "beforeSelfClosing": "always",
+          "afterOpening": "never"
+        }
+      ],
+      "react/forbid-component-props": "off",
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-curly-brace-presence": "off",
+      "react/require-default-props": "off",
+      "react/jsx-no-bind": "off"
+    }
+  }
+}
