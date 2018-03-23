@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import Loader from './loader'
 import Notification from './notification'
 
-const LoadingContent = ({loading, msg, error, children}) => {
+const LoadingContent = ({loading, msg, error, style, children}) => {
   if (loading) {
     return (
-      <div className='loader'>
+      <div style={style} className='loader'>
         <div className='content'>
           <Loader />
           {msg && <p>{msg}</p>}
@@ -30,7 +30,7 @@ const LoadingContent = ({loading, msg, error, children}) => {
     )
   } else if (error) {
     return (
-      <div className='error'>
+      <div style={style} className='error'>
         <Notification message={error.message} type='error' />
         <style jsx>{`
           .error {
@@ -48,12 +48,14 @@ LoadingContent.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.object,
   msg: PropTypes.string,
+  style: PropTypes.object,
   children: PropTypes.node.isRequired
 }
 
 LoadingContent.defaultProps = {
   loading: false,
   msg: null,
+  style: null,
   error: null
 }
 

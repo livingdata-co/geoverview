@@ -82,13 +82,12 @@ class Map extends React.Component {
     return (
       <div className='container'>
         {loading &&
-          <LoadingContent msg='Chargement des données' loading>
+          <LoadingContent style={{padding: '2em', backgroundColor: '#fff', zIndex: 3}} msg='Chargement des données' loading>
             <div />
           </LoadingContent>
         }
-
         <Mapbox
-          onStyleDataLoading={this.handleStyleLoad}
+          onStyleLoad={this.handleStyleLoad}
           center={layerCenter || boundsCenter}
           fitBounds={bounds}
           fitBoundsOptions={{padding: 20, linear: frozen}}
