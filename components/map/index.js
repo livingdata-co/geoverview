@@ -4,7 +4,7 @@ import ReactMapboxGl, {ScaleControl} from 'react-mapbox-gl'
 import {groupBy} from 'lodash'
 import {center, bbox} from '@turf/turf'
 
-import Loader from '../loader'
+import LoadingContent from '../loading-content'
 
 import Layers from './layers'
 import PopUp from './pop-up'
@@ -82,12 +82,13 @@ class Map extends React.Component {
     return (
       <div className='container'>
         {loading &&
-          <div className='loader'>
-            <Loader />
-          </div>}
+          <LoadingContent msg='Chargement des données' loading>
+            <div />
+          </LoadingContent>
+        }
 
         <Mapbox
-          onStyleLoad={this.handleStyleLoad}
+          onStyleDataLoading={this.handleStyleLoad}
           center={layerCenter || boundsCenter}
           fitBounds={bounds}
           fitBoundsOptions={{padding: 20, linear: frozen}}
@@ -122,17 +123,6 @@ class Map extends React.Component {
 
         <style jsx>{`
           .container {
-            height: 100%;
-          }
-
-          .loader {
-            z-index: 10;
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: auto;
-            width: 100%;
             height: 100%;
           }
             `}</style>

@@ -3,18 +3,27 @@ import PropTypes from 'prop-types'
 import Loader from './loader'
 import Notification from './notification'
 
-const LoadingContent = ({loading, error, children}) => {
+const LoadingContent = ({loading, msg, error, children}) => {
   if (loading) {
     return (
       <div className='loader'>
-        <Loader />
+        <div className='content'>
+          <Loader />
+          {msg && <p>{msg}</p>}
+        </div>
         <style jsx>{`
           .loader {
-            margin: 1em;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+          }
+
+          .content {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            align-items: center;
           }
         `}</style>
       </div>
@@ -38,11 +47,13 @@ const LoadingContent = ({loading, error, children}) => {
 LoadingContent.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.object,
+  msg: PropTypes.string,
   children: PropTypes.node.isRequired
 }
 
 LoadingContent.defaultProps = {
   loading: false,
+  msg: null,
   error: null
 }
 

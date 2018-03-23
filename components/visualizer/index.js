@@ -57,7 +57,13 @@ class Visualizer extends React.Component {
   async handleFileDrop(fileList) {
     const file = fileList[0]
     const fileExtension = getFileExtension(file.name)
-    this.setState({vectors: null, loading: true})
+
+    this.setState({
+      vectors: null,
+      step: 'Chargement du fichier',
+      loading: true
+    })
+
     if (file.type && !allowedTypes.includes(file.type)) {
       this.setState({
         error: `Ce type de fichier n’est pas supporté : ${file.type}.`,
@@ -72,13 +78,14 @@ class Visualizer extends React.Component {
       this.setState({
         file,
         error: null,
+        step: 'Analyse du fichier',
         loading: false
       }, await this.parseFile(file))
     }
   }
 
   render() {
-    const {file, vectors, loading, error} = this.state
+    const {file, vectors, step, loading, error} = this.state
 
     return (
       <div>
@@ -86,7 +93,7 @@ class Visualizer extends React.Component {
           <Notification style={{marginTop: '1em'}} message={error} type='error' />
         }
 
-        <LoadingContent loading={loading}>
+        <LoadingContent msg={step} loading={loading}>
           <DropzoneMap file={file} vectors={vectors} onFileDrop={this.handleFileDrop} />
         </LoadingContent>
       </div>

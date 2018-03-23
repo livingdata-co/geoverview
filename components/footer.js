@@ -51,6 +51,10 @@ const Footer = () => (
         margin-right: 1em;
       }
 
+      .footer__social a {
+        color: ${theme.colors.white};
+      }
+
       .footer__social img {
         width: 25px;
       }

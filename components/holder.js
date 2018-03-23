@@ -37,7 +37,7 @@ class Holder extends React.Component {
   }
 
   render() {
-    const {file, placeholder, hide} = this.props
+    const {placeholder, hide} = this.props
     const {dropzoneActive} = this.state
 
     return (
@@ -48,14 +48,15 @@ class Holder extends React.Component {
         style={style}
         multiple={false}>
 
-        <div className='dropzone centered'>
-          <div className={`test ${dropzoneActive ? 'dropzone-active' : ''}`}>
-            <div className='centered container'>
-              <div className='drop-icon'>{file && !dropzoneActive ? <FaFile /> : <FaPlus />}</div>
-              <div>{file ? file.name : placeholder}</div>
+        {!hide &&
+          <div className='dropzone centered'>
+            <div className={`test ${dropzoneActive ? 'dropzone-active' : ''}`}>
+              <div className='centered container'>
+                <div className='drop-icon'>{dropzoneActive ? <FaPlus /> : <FaFile />}</div>
+                <div>{!dropzoneActive && placeholder}</div>
+              </div>
             </div>
-          </div>
-        </div>
+          </div>}
 
         <style jsx>{`
           .dropzone {
@@ -104,7 +105,6 @@ class Holder extends React.Component {
 }
 
 Holder.propTypes = {
-  file: PropTypes.object,
   hide: PropTypes.bool,
   placeholder: PropTypes.string.isRequired,
   onDrop: PropTypes.func.isRequired

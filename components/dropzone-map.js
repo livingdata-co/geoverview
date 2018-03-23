@@ -7,7 +7,11 @@ import LoadingContent from './loading-content'
 
 const Map = dynamic(import('./map'), {
   ssr: false,
-  loading: () => <LoadingContent loading>Chargement…</LoadingContent>
+  loading: () => (
+    <LoadingContent msg='Chargement de la carte' loading>
+      <div />
+    </LoadingContent>
+  )
 })
 
 class DropzoneMap extends React.Component {
@@ -31,7 +35,7 @@ class DropzoneMap extends React.Component {
   render() {
     const {dragOver} = this.state
     const {file, vectors} = this.props
-    const displayHolder = dragOver
+    const displayHolder = dragOver || !file
 
     return (
       <div className='dropzone' onDragEnter={this.handleOnDragEnter}>
@@ -39,7 +43,7 @@ class DropzoneMap extends React.Component {
           file={file}
           placeholder={`Glissez un fichier .geojson ou .json ici ou cliquez pour choisir`}
           onDrop={this.handleOnDrop}
-          hide={displayHolder} />
+          hide={!displayHolder} />
 
         {vectors &&
           <div className='map-container'>
