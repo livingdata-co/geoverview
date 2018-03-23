@@ -90,7 +90,7 @@ class Visualizer extends React.Component {
     return (
       <div>
         {error &&
-          <Notification style={{marginTop: '1em'}} message={error} type='error' />
+          <Notification style={{width: '80%', margin: '2em auto -2em'}} message={error} type='error' />
         }
 
         <LoadingContent msg={step} loading={loading}>
