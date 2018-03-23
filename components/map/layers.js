@@ -51,7 +51,9 @@ class Layers extends React.Component {
     const options = {
       cluster,
       clusterMaxZoom: 14,
-      clusterRadius: 50
+      clusterRadius: 50,
+      tolerance: 0.5,
+      buffer: 60
     }
 
     return (
