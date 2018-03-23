@@ -1,3 +1,5 @@
+import asset from 'next/asset'
+
 export default () => (
   <style jsx global>{`
     @font-face {
@@ -6,8 +8,8 @@ export default () => (
       font-style: normal;
       font-stretch: normal;
       src:
-        url('/static/fonts/SourceSansPro/SourceSansPro-Regular.otf.woff2') format('woff2'),
-        url('/static/fonts/SourceSansPro/SourceSansPro-Regular.otf.woff')  format('woff');
+        url(${asset('/fonts/SourceSansPro/SourceSansPro-Regular.otf.woff2')}) format('woff2'),
+        url(${asset('/fonts/SourceSansPro/SourceSansPro-Regular.otf.woff')}) format('woff');
     }
 
     @font-face {
@@ -16,8 +18,8 @@ export default () => (
       font-style: italic;
       font-stretch: normal;
       src:
-        url('/static/fonts/SourceSansPro/SourceSansPro-It.otf.woff2') format('woff2'),
-        url('/static/fonts/SourceSansPro/SourceSansPro-It.otf.woff')  format('woff');
+        url(${asset('/fonts/SourceSansPro/SourceSansPro-It.otf.woff2')}) format('woff2'),
+        url(${asset('/fonts/SourceSansPro/SourceSansPro-It.otf.woff')}) format('woff');
     }
 
     @font-face {
@@ -26,8 +28,8 @@ export default () => (
       font-style: normal;
       font-stretch: normal;
       src:
-        url('/static/fonts/SourceSansPro/SourceSansPro-Bold.otf.woff2') format('woff2'),
-        url('/static/fonts/SourceSansPro/SourceSansPro-Bold.otf.woff')  format('woff');
+        url(${asset('/fonts/SourceSansPro/SourceSansPro-Bold.otf.woff2')}) format('woff2'),
+        url(${asset('/fonts/SourceSansPro/SourceSansPro-Bold.otf.woff')}) format('woff');
     }
 
     @font-face {
@@ -36,8 +38,8 @@ export default () => (
       font-style: italic;
       font-stretch: normal;
       src:
-        url('/static/fonts/SourceSansPro/SourceSansPro-BoldIt.otf.woff2') format('woff2'),
-        url('/static/fonts/SourceSansPro/SourceSansPro-BoldIt.otf.woff')  format('woff');
+        url(${asset('/fonts/SourceSansPro/SourceSansPro-BoldIt.otf.woff2')}) format('woff2'),
+        url(${asset('/fonts/SourceSansPro/SourceSansPro-BoldIt.otf.woff')}) format('woff');
     }
 
     @font-face {
@@ -47,7 +49,7 @@ export default () => (
       src:
         local('Evolventa'),
         local('Evolventa-Regular'),
-        url('/static/fonts/Evolventa/Evolventa-Regular.woff') format('woff');
+        url(${asset('/fonts/Evolventa/Evolventa-Regular.woff')}) format('woff');
     }
 
     @font-face {
@@ -57,7 +59,7 @@ export default () => (
       src:
         local('Evolventa Oblique'),
         local('Evolventa-Oblique'),
-        url('/static/fonts/Evolventa/Evolventa-Oblique.woff') format('woff');
+        url(${asset('/fonts/Evolventa/Evolventa-Oblique.woff')}) format('woff');
     }
 
     @font-face {
@@ -67,7 +69,7 @@ export default () => (
       src:
         local('Evolventa Bold'),
         local('Evolventa-Bold'),
-        url('/static/fonts/Evolventa/Evolventa-Bold.woff') format('woff');
+        url(${asset('/fonts/Evolventa/Evolventa-Bold.woff')}) format('woff');
     }
 
     @font-face {
@@ -77,7 +79,7 @@ export default () => (
       src:
         local('Evolventa Bold Oblique'),
         local('Evolventa-BoldOblique'),
-        url('/static/fonts/Evolventa/Evolventa-BoldOblique.woff') format('woff');
+        url(${asset('/fonts/Evolventa/Evolventa-BoldOblique.woff')}) format('woff');
     }
   `}</style>
 )

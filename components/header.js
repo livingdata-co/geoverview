@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import asset from 'next/asset'
 
 import theme from '../styles/theme'
 
@@ -8,7 +9,7 @@ export default () => (
 
       <Link href='/'>
         <a className='nav__link'>
-          <img className='nav__logo' src='/static/images/logos/logo.png' alt='Accueil' />
+          <img className='nav__logo' src={asset('/images/logos/logo.png')} alt='Accueil' />
         </a>
       </Link>
 

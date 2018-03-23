@@ -1,6 +1,7 @@
 import {Fragment} from 'react'
 import PropTypes from 'prop-types'
 import Head from 'next/head'
+import asset from 'next/asset'
 
 const SITE_NAME = ''
 
@@ -14,7 +15,7 @@ const Meta = ({title, description}) => {
 
         {title ? <title>{title} | {SITE_NAME}</title> : <title>{SITE_NAME}</title>}
 
-        <link rel='icon' href='/static/favicon.ico' />
+        <link rel='icon' href={asset('/favicon.ico')} />
 
         {/* Search Engine */}
         <meta name='description' content={description} />
