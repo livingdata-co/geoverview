@@ -108,9 +108,10 @@ class Map extends React.Component {
               renderPopUp={this.renderPopUp} />
           }
 
-          {Object.keys(featuresTypes).map(type => (
+          {Object.keys(featuresTypes).map((type, idx) => (
             <Layers
               key={type}
+              id={`${type}-${idx}`}
               data={{
                 type: 'FeatureCollection',
                 features: featuresTypes[type]
