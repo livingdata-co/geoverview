@@ -55,7 +55,7 @@ class DropzoneMap extends React.Component {
           .dropzone {
             z-index: 0;
             width: 100%;
-            height: 71vh;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -72,7 +72,7 @@ class DropzoneMap extends React.Component {
             z-index: ${displayHolder ? -1 : 1};
             position: absolute;
             width: 100%;
-            height: 71vh;
+            height: 100%;
             top: 81px;
           }
             `}</style>

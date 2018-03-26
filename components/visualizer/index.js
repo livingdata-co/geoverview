@@ -88,7 +88,7 @@ class Visualizer extends React.Component {
     const {file, vectors, step, loading, error} = this.state
 
     return (
-      <div>
+      <div style={{height: '90vh'}}>
         {error &&
           <Notification style={{width: '80%', margin: '2em auto -2em'}} message={error} type='error' />
         }

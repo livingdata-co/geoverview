@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import Meta from '../components/meta'
 import Header from '../components/header'
 import MainStyle from '../components/main-style'
-import Footer from '../components/footer'
 
 class Layout extends React.Component {
   render() {
@@ -18,7 +17,6 @@ class Layout extends React.Component {
         <main>
           {children}
         </main>
-        <Footer />
         <script src='https://cdn.polyfill.io/v2/polyfill.min.js?features=Array.prototype.includes,modernizr:es6string,Promise,fetch' />
         <style jsx>{`
             .container {
