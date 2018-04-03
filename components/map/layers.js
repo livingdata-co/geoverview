@@ -40,37 +40,37 @@ class Layers extends React.Component {
 
   getCirclePaint() {
     return {
-      'circle-radius': 1,
+      'circle-radius': 5,
       'circle-color': '#3099df',
       'circle-opacity': 0.6
     }
   }
 
   render() {
-    const {data, id, cluster, onToggleHover} = this.props
-    const options = {
-      cluster,
-      clusterMaxZoom: 14,
-      clusterRadius: 50,
-      tolerance: 0.5,
-      buffer: 60
+    const {data, id, isPoint, options, onToggleHover} = this.props
+    options.cluster = options.cluster && isPoint
+    const clusterOptions = {
+      maxZoom: options.clusterMaxZoom,
+      radius: options.clusterRadius
     }
+    console.log(`CREATE ${id}`)
 
     return (
       <Fragment>
-        <GeoJSONLayer
-          id={id}
-          sourceOptions={options}
-          data={data}
-          lineLayout={lineLayout}
-          linePaint={linePaint}
-          fillPaint={fillPaint}
-          polygonPaint={polygonPaint}
-          circlePaint={this.getCirclePaint()}
-          circleOnMouseDown={this.markerClick}
-          circleOnMouseEnter={onToggleHover}
-          circleOnMouseLeave={onToggleHover} />
-        {cluster && <ClusterLayers sourceId={id} />}
+        {options.cluster ?
+          <ClusterLayers features={data.features} options={clusterOptions} /> :
+          <GeoJSONLayer
+            id={id}
+            sourceOptions={options}
+            data={data}
+            lineLayout={lineLayout}
+            linePaint={linePaint}
+            fillPaint={fillPaint}
+            polygonPaint={polygonPaint}
+            circlePaint={this.getCirclePaint()}
+            circleOnMouseDown={this.markerClick}
+            circleOnMouseEnter={onToggleHover}
+            circleOnMouseLeave={onToggleHover} />}
       </Fragment>
     )
   }
@@ -79,14 +79,22 @@ class Layers extends React.Component {
 Layers.propTypes = {
   data: PropTypes.object.isRequired,
   id: PropTypes.string,
-  cluster: PropTypes.bool,
+  isPoint: PropTypes.bool,
+  options: PropTypes.object,
   markerClick: PropTypes.func,
   onToggleHover: PropTypes.func
 }
 
 Layers.defaultProps = {
   id: 'source_id',
-  cluster: false,
+  isPoint: false,
+  options: {
+    cluster: true,
+    clusterMaxZoom: 14,
+    clusterRadius: 50,
+    tolerance: 0.5,
+    buffer: 60
+  },
   markerClick: () => {},
   onToggleHover: () => {}
 }

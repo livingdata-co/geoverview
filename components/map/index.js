@@ -11,10 +11,39 @@ import PopUp from './pop-up'
 
 const Mapbox = ReactMapboxGl({})
 
+function genId(type, idx, options) {
+  const {cluster, buffer, clusterRadius, clusterMaxZoom, tolerance} = options
+  return `${type}-${idx}-c${cluster ? 'true' : 'false'}-b${buffer}-cR${clusterRadius}-cMZ${clusterMaxZoom}-t${tolerance}`
+}
+
+function removeLayers(map, sourceName) {
+  const layers = [
+    'symbol',
+    'line',
+    'fill',
+    'fill-extrusion',
+    'circle'
+  ]
+
+  layers.map(name => {
+    const layerName = `${sourceName}-${name}`
+    if (map.getLayer(layerName)) {
+      map.removeLayer(layerName)
+    }
+  })
+}
+
+function removeClusterLayers(map) {
+  map.removeLayer('cluster_layer')
+  map.removeLayer('unclustered_layer')
+  map.removeLayer('cluster-count')
+}
+
 class Map extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      map: null,
       layer: null,
       layerCenter: null,
       loading: true,
@@ -41,6 +70,25 @@ class Map extends React.Component {
       ],
       boundsCenter
     })
+  }
+
+  componentWillReceiveProps(props) {
+    const {map} = this.state
+    const {options, vectors} = this.props
+
+    if (props.options !== options) {
+      const featuresTypes = groupBy(vectors.features, feature => feature.geometry.type)
+      Object.keys(featuresTypes).map((type, idx) => {
+        const name = genId(type, idx, options)
+
+        removeLayers(map, name)
+
+        if (map.getSource(name)) {
+          map.removeSource(name)
+        }
+        console.log(`REMOVE ${name}`)
+      })
+    }
   }
 
   onDrag() {
@@ -70,14 +118,16 @@ class Map extends React.Component {
     )
   }
 
-  handleStyleLoad() {
-    this.setState({loading: false})
+  handleStyleLoad(map) {
+    this.setState({map, loading: false})
   }
 
   render() {
+    const {vectors, options, frozen} = this.props
     const {layer, layerCenter, bounds, boundsCenter, loading} = this.state
-    const {vectors, frozen} = this.props
     const featuresTypes = groupBy(vectors.features, feature => feature.geometry.type)
+
+    const randColor = `#${Math.floor(Math.random() * (999999 - 111111 + 1)) + 111111}`
 
     return (
       <div className='container'>
@@ -111,12 +161,14 @@ class Map extends React.Component {
           {Object.keys(featuresTypes).map((type, idx) => (
             <Layers
               key={type}
-              id={`${type}-${idx}`}
-              data={{
+              id={genId(type, idx, options)}
+              data={Object.assign({}, {
                 type: 'FeatureCollection',
-                features: featuresTypes[type]
-              }}
-              cluster={type === 'Point'}
+                features: featuresTypes[type],
+                color: randColor
+              })}
+              isPoint={type === 'Point'}
+              options={options}
               markerClick={this.markerClick} />))
         }
         </Mapbox>
@@ -134,6 +186,7 @@ class Map extends React.Component {
 
 Map.propTypes = {
   vectors: PropTypes.object.isRequired,
+  options: PropTypes.object.isRequired,
   frozen: PropTypes.bool
 }
 

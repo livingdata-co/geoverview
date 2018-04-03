@@ -5,6 +5,9 @@ import dynamic from 'next/dynamic'
 import Holder from './holder'
 import LoadingContent from './loading-content'
 
+import OptionsMenu from './OptionsMenu'
+import OptionsButton from './OptionsMenu/options-button'
+
 const Map = dynamic(import('./map'), {
   ssr: false,
   loading: () => (
@@ -14,12 +17,32 @@ const Map = dynamic(import('./map'), {
   )
 })
 
+const OptionsButtonStyle = {
+  position: 'absolute',
+  zIndex: 5,
+  top: '1em',
+  left: '1em'
+}
+
 class DropzoneMap extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {dragOver: false}
+    this.state = {
+      dragOver: false,
+      optionsMenu: false,
+      mapOptions: {
+        cluster: true,
+        tolerance: 0.5,
+        clusterRadius: 50,
+        clusterMaxZoom: 14,
+        buffer: 60
+      }
+    }
+
     this.handleOnDragEnter = this.handleOnDragEnter.bind(this)
     this.handleOnDrop = this.handleOnDrop.bind(this)
+    this.handleOptions = this.handleOptions.bind(this)
+    this.handleOptionsMenu = this.handleOptionsMenu.bind(this)
   }
 
   handleOnDragEnter() {
@@ -32,8 +55,20 @@ class DropzoneMap extends React.Component {
     onFileDrop(files)
   }
 
+  handleOptionsMenu() {
+    this.setState(prevState => {
+      return {optionsMenu: !prevState.optionsMenu}
+    })
+  }
+
+  handleOptions(option, value) {
+    const options = {...this.state.mapOptions}
+    options[option] = value
+    this.setState({mapOptions: options})
+  }
+
   render() {
-    const {dragOver} = this.state
+    const {dragOver, optionsMenu, mapOptions} = this.state
     const {file, vectors} = this.props
     const displayHolder = dragOver || !file
 
@@ -47,7 +82,16 @@ class DropzoneMap extends React.Component {
 
         {vectors &&
           <div className='map-container'>
-            <Map vectors={vectors} />
+            <Map vectors={vectors} options={mapOptions} />
+            {optionsMenu ?
+              <OptionsMenu
+                options={mapOptions}
+                onClose={this.handleOptionsMenu}
+                onChange={this.handleOptions} /> :
+              <OptionsButton
+                style={OptionsButtonStyle}
+                onClick={this.handleOptionsMenu} />
+            }
           </div>
         }
 

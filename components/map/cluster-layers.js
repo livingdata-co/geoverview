@@ -1,75 +1,64 @@
-import {Fragment} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import {Layer} from 'react-mapbox-gl'
+import {Cluster, Marker} from 'react-mapbox-gl'
 
-const ClusterLayers = ({sourceId}) => (
-  <Fragment>
-    <Layer
-      id='cluster_layer'
-      sourceId={sourceId}
-      layerOptions={{
-        filter: [
-          'has', 'point_count'
-        ]
-      }}
-      paint={{
-        'circle-color': [
-          'step',
-          ['get', 'point_count'],
-          '#B4E1FA',
-          100,
-          '#1E90DA',
-          750,
-          '#006CB0'
-        ],
-        'circle-radius': [
-          'step',
-          ['get', 'point_count'],
-          20,
-          100,
-          30,
-          750,
-          40
-        ]
-      }}
-      type='circle' />
+const styles = {
+  clusterMarker: {
+    width: 30,
+    height: 30,
+    borderRadius: '50%',
+    backgroundColor: '#51D5A0',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white',
+    border: '2px solid #56C498',
+    cursor: 'pointer'
+  },
+  marker: {
+    width: 30,
+    height: 30,
+    borderRadius: '50%',
+    backgroundColor: '#E0E0E0',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: '2px solid #C9C9C9'
+  }
+}
 
-    <Layer
-      id='unclustered_layer'
-      sourceId={sourceId}
-      layerOptions={{
-        filter: [
-          '!has', 'point_count'
-        ]
-      }}
-      paint={{
-        'circle-color': 'green',
-        'circle-radius': 10
-      }}
-      type='circle' />
+class ClusterLayers extends React.Component {
+  clusterMarker(coordinates, pointCount) {
+    return (
+      <Marker
+        key={coordinates.toString()}
+        coordinates={coordinates}
+        style={styles.clusterMarker}>
+        <div>{pointCount}</div>
+      </Marker>
+    )
+  }
 
-    <Layer
-      id='cluster-count'
-      sourceId={sourceId}
-      layerOptions={{
-        filter: [
-          'has', 'point_count'
-        ]
-      }}
-      layout={{
-        'text-field': '{point_count_abbreviated}',
-        'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-        'text-size': 12
-      }}
-      paint={{
-        'text-color': '#fff'
-      }}
-      type='symbol' />
-  </Fragment>
-)
+  render() {
+    const {features, options} = this.props
+    console.log(options);
+    return (
+      <Cluster ClusterMarkerFactory={this.clusterMarker} nodeSize={128} {...options}>
+        {features.map(feature => (
+          <Marker
+            key={feature.geometry.coordinates}
+            style={styles.marker}
+            coordinates={feature.geometry.coordinates}
+            data-feature={feature} />
+        ))}
+      </Cluster>
+    )
+  }
+}
 
 ClusterLayers.propTypes = {
-  sourceId: PropTypes.string.isRequired
+  features: PropTypes.array.isRequired,
+  options: PropTypes.object.isRequired
 }
 
 export default ClusterLayers
