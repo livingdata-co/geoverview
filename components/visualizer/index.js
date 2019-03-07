@@ -7,7 +7,8 @@ import DropzoneMap from '../dropzone-map'
 import getFileExtension from '../../lib/file'
 
 const allowedTypes = [
-  'application/json'
+  'application/json',
+  'application/geo+json'
 ]
 
 const allowedExtensions = [
